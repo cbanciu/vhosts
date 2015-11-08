@@ -173,7 +173,6 @@ def main():
     
     parser = OptionParser(usage="usage: %prog [options]", version="%prog 1.0", add_help_option=True) 
     parser.add_option("-d", "--domain", help="Display domain virtualhost info", dest="domain", action="store")
-    parsed.add_option("-h")
     (options, args) = parser.parse_args()
 
     if options.domain:
