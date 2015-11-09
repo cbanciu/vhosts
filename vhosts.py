@@ -28,14 +28,14 @@ class bcolors:
 def apache_files():
     """Get Apache HTTPD_ROOT and SERVER_CONFIG_FILE"""
 
-    if subprocess.call("type " + "apache2ctl", shell=True, stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w')) == 0:
+    if subprocess.call("type " + "apache2ctl", shell=True, stdout=subprocess.PIPE, stderr=open('/dev/null', 'w')) == 0:
         command = 'apache2ctl -V 2>/dev/null | egrep "SERVER_CONFIG_FILE|HTTPD_ROOT" | cut -d= -f2'
-    elif subprocess.call("type " + "apachectl", shell=True, stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w')) == 0:
+    elif subprocess.call("type " + "apachectl", shell=True, stdout=subprocess.PIPE, stderr=open('/dev/null', 'w')) == 0:
         command = 'apachectl -V 2>/dev/null | egrep "SERVER_CONFIG_FILE|HTTPD_ROOT" | cut -d= -f2'
     else:
         print bcolors.FAIL + "Cannot open Apache config file. Is Apache installed?" + bcolors.ENDC
         exit(1)
-    proc = subprocess.Popen(command, stdout=open('/dev/null', 'w'), shell=True)
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     apache_files = proc.stdout.read().split()
     for i in range(2):
         if apache_files[i][0] in ('"', "'") and apache_files[i][0] == apache_files[i][-1]:
@@ -47,6 +47,7 @@ def apache_files():
 
 def get_conf_files(f):
     """Get a list of Apache config files starting from httpd.conf or apache2.conf"""
+
 
     apache_conf = apache_files()[1]
     apache_root = apache_files()[0]+"/"
