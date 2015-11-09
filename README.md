@@ -24,7 +24,7 @@ Options:
 
 ### Requirments
 
-* python 2.6 or newer
+* python 2.4 or newer
 
 ###Bugs
 
