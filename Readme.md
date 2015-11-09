@@ -12,7 +12,7 @@ $ curl -s https://raw.githubusercontent.com/cbanciu/vhosts/master/vhosts.py > vh
 ###Usage
 
 ```sh
-$ $ python vhosts.py -h
+$ python vhosts.py -h
 Usage: vhosts.py [options]
 
 Options:
@@ -21,3 +21,7 @@ Options:
   -d DOMAIN, --domain=DOMAIN
                         Display domain virtualhost info
 ```
+
+###Bugs
+
+It doesn't work with Plesk
