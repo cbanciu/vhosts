@@ -22,6 +22,9 @@ Options:
                         Display domain virtualhost info
 ```
 
+### Requirments
+
+* python 2.6 or newer
 
 ###Bugs
 
