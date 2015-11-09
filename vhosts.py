@@ -6,6 +6,7 @@ from glob import glob
 import itertools
 import os
 import re
+from sys import exit
 from optparse import OptionParser
 
 
@@ -38,17 +39,20 @@ def apache_files():
         apache_conf = "/etc/apache2/apache2.conf"
         apache_root = "/etc/apache2/"
     else:
-        webserver = "apache2"
-        apache_conf = "/etc/apache2/httpd.conf"
-        apache_root = "/etc/apache2/"
+        print bcolors.FAIL + "This application only works on RedHat, Ubuntu or Debian" + bcolors.ENDC
+        exit(1)
     return webserver, apache_conf, apache_root
 
 def get_conf_files(f):
     """Get a list of Apache config files starting from httpd.conf or apache2.conf"""
-    apache_root = apache_files()[2]
     apache_conf = apache_files()[1]
+    apache_root = apache_files()[2]
     conf_files = [[apache_conf]]
-    fi = open(f, "r")
+    try:
+        fi = open(f, "r")
+    except:
+        print bcolors.FAIL + "Cannot open Apache config file. Is Apache installed?" + bcolors.ENDC
+        exit(1)
     for line in iter(fi):
         if line.strip().lower().startswith("include") or line.strip().lower().startswith("includeoptional"):
             line_to_add = line.strip().split(" ")[1]
@@ -152,8 +156,8 @@ def list_vhost(vhost):
 
 
 def list_all():
-    print_header()
     vhost_dict = get_vhost_dict()
+    print_header()
     for value,key  in sorted([(value,key) for (key,value) in vhost_dict.items()]):
         try:
             print bcolors.OKBLUE + '{:30}'.format(key) + " " + bcolors.ENDC + "".join('{:35}'.format(v) for v in value)
