@@ -28,5 +28,5 @@ Options:
 
 ###Bugs
 
-It doesn't work with Plesk
+* It doesn't work with Plesk
 
