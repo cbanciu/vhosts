@@ -35,7 +35,7 @@ def apache_files():
     else:
         print bcolors.FAIL + "Cannot open Apache config file. Is Apache installed?" + bcolors.ENDC
         exit(1)
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen(command, stdout=stdout=open('/dev/null', 'w'), shell=True)
     apache_files = proc.stdout.read().split()
     for i in range(2):
         if apache_files[i][0] in ('"', "'") and apache_files[i][0] == apache_files[i][-1]:
