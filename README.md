@@ -6,6 +6,8 @@ This is a small python application to nicely display informations about Apache v
 ###Instalation
 
 ```sh 
+$ curl -s https://raw.githubusercontent.com/cbanciu/vhosts/master/vhosts.py | python -
+
 $ curl -s https://raw.githubusercontent.com/cbanciu/vhosts/master/vhosts.py > vhosts.py
 ```
 
