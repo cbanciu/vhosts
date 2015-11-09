@@ -30,7 +30,7 @@ def apache_files():
 
     if subprocess.call("type " + "apache2ctl", shell=True, stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w')) == 0:
         command = 'apache2ctl -V 2>/dev/null | egrep "SERVER_CONFIG_FILE|HTTPD_ROOT" | cut -d= -f2'
-    elif subprocess.call("type " + "apachectl", shell=True, stdout=subprocess.PIPE, stderr=open('/dev/null', 'w')) == 0:
+    elif subprocess.call("type " + "apachectl", shell=True, stdout=open('/dev/null', 'w'), stderr=open('/dev/null', 'w')) == 0:
         command = 'apachectl -V 2>/dev/null | egrep "SERVER_CONFIG_FILE|HTTPD_ROOT" | cut -d= -f2'
     else:
         print bcolors.FAIL + "Cannot open Apache config file. Is Apache installed?" + bcolors.ENDC
