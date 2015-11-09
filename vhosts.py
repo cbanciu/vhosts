@@ -55,7 +55,7 @@ def get_conf_files(f):
         exit(1)
     for line in iter(fi):
         if line.strip().lower().startswith("include") or line.strip().lower().startswith("includeoptional"):
-            line_to_add = line.strip().split(" ")[1]
+            line_to_add = line.strip().split()[1]
             if line_to_add[0] in ('"', "'") and line_to_add[0] == line_to_add[-1]:
                 line_to_add = line_to_add[1:-1]
             if not line_to_add.strip().startswith("/"):
@@ -74,7 +74,7 @@ def get_conf_files(f):
 def get_line(ln,st):
     if ln.lower().strip().startswith(st):
         if st.lower().strip() == "<virtualhost":
-            return ln.strip().partition(':')[-1].rpartition('>')[0] or "80"
+            return re.search(r'\:(.*)\>',ln.strip(":").split()[1]).group(1) or "80"
         if st.lower().strip() == "serveralias":
             return re.sub(r'^(\w+ )',r'', ln.strip())
         else:
