@@ -175,7 +175,7 @@ def main():
     #else:
     #    list_all()
     
-    parser = OptionParser(usage="usage: %prog [options]", version="%prog 1.0", add_help_option=True) 
+    parser = OptionParser(usage="usage: %prog [options]", version="%prog 0.6-beta", add_help_option=True) 
     parser.add_option("-d", "--domain", help="Display domain virtualhost info", dest="domain", action="store")
     (options, args) = parser.parse_args()
 
