@@ -90,8 +90,6 @@ def get_line(ln, st):
 def get_vhosts():
     """Iterate through vhost list and get everything between <VirtualHost> and </VirtualHost>"""
     apache_conf = apache_files()[1]
-    print apache_conf
-    print apache_files()[0]
     vhosts_files = get_conf_files(apache_conf)
     all_vhosts = []
     vhost = None
