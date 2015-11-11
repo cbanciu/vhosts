@@ -7,6 +7,7 @@ This is a small python application to nicely display informations about Apache v
 
 ```sh
 $ curl -s https://raw.githubusercontent.com/cbanciu/vhosts/master/vhosts.py > vhosts.py
+$ python vhosts.py
 ```
 
 Or if you prefer running it directly from github
