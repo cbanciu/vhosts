@@ -45,41 +45,61 @@ def apache_files():
     return apache_files
 
 
-def get_conf_files(f):
+def get_conf_list(f_list):
     """Get a list of Apache config files starting from httpd.conf or apache2.conf"""
 
-
-    apache_conf = apache_files()[1]
     apache_root = apache_files()[0]+"/"
-    conf_files = [[apache_conf]]
-    try:
-        fi = open(f, "r")
-    except:
-        print bcolors.FAIL + "Cannot open Apache config file. Is Apache installed?" + bcolors.ENDC
-        exit(1)
-    for line in iter(fi):
-        if line.strip().lower().startswith("include") or line.strip().lower().startswith("includeoptional"):
-            line_to_add = line.strip().split()[1]
+    conf_files = []
+    lines = []
+    for f in f_list:
+        try:
+            fi = open(f, "r")
+        except:
+            print "Cannot open config file."
+            pass
+        for line in iter(fi):
+            if line.strip().lower().startswith("include") or line.strip().lower().startswith("includeoptional"):
+                lines_to_add = line.strip().split()[1]
+                lines.append(lines_to_add)
+        for line_to_add in lines:
             if line_to_add[0] in ('"', "'") and line_to_add[0] == line_to_add[-1]:
                 line_to_add = line_to_add[1:-1]
+
             if not line_to_add.strip().startswith("/"):
                 line_to_add = apache_root+line_to_add
+
             if os.path.isdir(line_to_add):
-                file_to_add = glob(line_to_add+'/*')
-                conf_files.append(file_to_add)
-            else:
-                file_to_add = glob(line_to_add)
-                conf_files.append(file_to_add)
-            for files in file_to_add:
-                get_conf_files(files)
-    fi.close()
+               conf_files.append(glob(line_to_add+'/*'))
+
+            if not os.path.isdir(line_to_add):
+                conf_files.append(glob(line_to_add))
+
     return list(set(itertools.chain(*conf_files)))
+
+
+def get_conf_files():
+    """Get a list of Apache config files starting from httpd.conf or apache2.conf"""
+
+    n = 0
+    apache_conf = [apache_files()[1]]
+    new_list = [apache_conf + get_conf_list(apache_conf)]
+    while True:   #n = n + 1
+        new_list.append(get_conf_list(new_list[n]))
+        if len(new_list[-1]) > 0:
+            new_list.append(get_conf_list(new_list[n]))
+            n = n + 1
+        else:
+            break
+    return list(set(itertools.chain(*new_list)))
 
 
 def get_line(ln, st):
     if ln.lower().strip().startswith(st):
         if st.lower().strip() == "<virtualhost":
-            return re.search(r'\:(.*)\>', ln.strip(":").split()[1]).group(1) or "80"
+            try:
+                return re.search(r'\:(.*)\>', ln.strip(":").split()[1]).group(1) 
+            except:
+                return "80"
         if st.lower().strip() == "serveralias":
             return re.sub(r'^(\w+ )', r'', ln.strip())
         else:
@@ -91,7 +111,7 @@ def get_line(ln, st):
 def get_vhosts():
     """Iterate through vhost list and get everything between <VirtualHost> and </VirtualHost>"""
     apache_conf = apache_files()[1]
-    vhosts_files = get_conf_files(apache_conf)
+    vhosts_files = get_conf_files()
     all_vhosts = []
     vhost = None
     in_vhost = False
@@ -145,6 +165,7 @@ def print_header():
     text_header = "DOCUMENTROOT ACCESS_LOG ERROR_LOG CONFIG_FILE"
     try:
         print bcolors.HEADER + "{:30}".format("SERVERNAME") + "" .join("{:45}".format(k) for k in text_header.split()) + bcolors.ENDC
+
     except:
         print bcolors.HEADER + "SERVERNAME".ljust(30) + "".join(k.ljust(45) for k in text_header.split()) + bcolors.ENDC
 
@@ -187,3 +208,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

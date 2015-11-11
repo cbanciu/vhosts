@@ -29,11 +29,14 @@ Options:
                         Display domain virtualhost info
 ```
 
-### Requirments
+### Requirements
 
 * python 2.4 or newer
 
-###Bugs
+###Bugs/To Do
 
-* It doesn't work with Plesk
-
+* It kinda works with Plesk
+* It doesnt read next line in case of \ delimiter
+* It doesn't strip out quotes in names
+* Proper table alignment based on columns lenght
+* Check if Apache is running
