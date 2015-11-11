@@ -159,8 +159,14 @@ def get_vhost_dict():
                 [test_string(site, "configfile")]
     return vhost_dict
 
+def get_longest_element():
+    vhost_dict = get_vhost_dict()
+    longest_element = len(max(len(v) for v in vhost_dict.itervalues))
+    return longest_element
+
 
 def print_header():
+    print get_longest_element()
     text_header = "DOCUMENTROOT ACCESS_LOG ERROR_LOG CONFIG_FILE"
     try:
         print bcolors.HEADER + "{:30}".format("SERVERNAME") + "" .join("{:45}".format(k) for k in text_header.split()) + bcolors.ENDC
@@ -182,6 +188,7 @@ def list_vhost(vhost):
     else:
         print "ServerName or ServerAlias " + bcolors.FAIL + vhost + bcolors.ENDC + \
             " doesn't seem to be defined in your Apache configuration"
+
 
 
 def list_all():
