@@ -97,7 +97,7 @@ def get_line(ln, st):
     if ln.lower().strip().startswith(st):
         if st.lower().strip() == "<virtualhost":
             try:
-                return re.search(r'\:(.*)\>', ln.strip(":").group(1))
+                return re.search(r'\:(.*)\>', ln.strip(":")).group(1)
             except:
                 return "80"
         if st.lower().strip() == "serveralias":
