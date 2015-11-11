@@ -133,11 +133,10 @@ def get_vhosts():
 def test_string(vhost_list, text):
     s = vhost_list.splitlines()
     for i in s:
-        if get_line(i, text) is "-":
-            get_line(i, text)
-        else:
-            return  get_line(i, text)
-    return get_line(i, text)
+        res = get_line(i,text)
+        if res != "-":
+            return res
+    return "-"
 
 
 def get_vhost_dict():
