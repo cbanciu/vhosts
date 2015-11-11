@@ -161,7 +161,9 @@ def get_vhost_dict():
 
 def get_longest_element():
     vhost_dict = get_vhost_dict()
-    longest_element = max(len(v) for v in vhost_dict.values())
+    #longest_element = max(len(v) for v in vhost_dict.values())
+    for v in vhost_dict.values():
+        print v
     return longest_element
 
 
