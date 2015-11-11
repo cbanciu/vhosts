@@ -159,34 +159,36 @@ def get_vhost_dict():
                 [test_string(site, "configfile")]
     return vhost_dict
 
+
 def get_longest_element():
     vhost_dict = get_vhost_dict()
-    #longest_element = max(len(v) for v in vhost_dict.values())
+    longest_element = []
     for v in vhost_dict.values():
-        print max(len(i) for i in v))
-    return longest_element
+        longest_element.append(max(len(i) for i in v))
+    return max(l for l in longest_element)
 
 
 def print_header():
-    print get_longest_element()
+    longest = get_longest_element()
     text_header = "DOCUMENTROOT ACCESS_LOG ERROR_LOG CONFIG_FILE"
     try:
-        print bcolors.HEADER + "{:30}".format("SERVERNAME") + "" .join("{:45}".format(k) for k in text_header.split()) + bcolors.ENDC
+        print bcolors.HEADER + "{:30}".format("SERVERNAME") + "" .join("{:longest}".format(k) for k in text_header.split()) + bcolors.ENDC
 
     except:
-        print bcolors.HEADER + "SERVERNAME".ljust(30) + "".join(k.ljust(45) for k in text_header.split()) + bcolors.ENDC
+        print bcolors.HEADER + "SERVERNAME".ljust(30) + "".join(k.ljust(longest) for k in text_header.split()) + bcolors.ENDC
 
 
 def list_vhost(vhost):
     vhost_dict = get_vhost_dict()
+    longest = get_longest_element()
     keys = [key for key in vhost_dict.keys() if key.startswith(vhost)]
     if keys:
         print_header()
         for key in keys:
             try:
-                print bcolors.OKBLUE + '{:30}'.format(key) + bcolors.ENDC + "".join("{:45}".format(v) for v in vhost_dict[key])
+                print bcolors.OKBLUE + '{:30}'.format(key) + bcolors.ENDC + "".join("{:longest}".format(v) for v in vhost_dict[key])
             except:
-                print bcolors.OKBLUE + key.ljust(30) + bcolors.ENDC + "".join(value.ljust(45) for value in vhost_dict[key])
+                print bcolors.OKBLUE + key.ljust(30) + bcolors.ENDC + "".join(value.ljust(longest) for value in vhost_dict[key])
     else:
         print "ServerName or ServerAlias " + bcolors.FAIL + vhost + bcolors.ENDC + \
             " doesn't seem to be defined in your Apache configuration"
@@ -195,12 +197,13 @@ def list_vhost(vhost):
 
 def list_all():
     vhost_dict = get_vhost_dict()
+    longest = get_longest_element()
     print_header()
     for value, key in sorted([(value, key) for (key, value) in vhost_dict.items()]):
         try:
-            print bcolors.OKBLUE + '{:30}'.format(key) + " " + bcolors.ENDC + "".join('{:45}'.format(v) for v in value)
+            print bcolors.OKBLUE + '{:30}'.format(key) + " " + bcolors.ENDC + "".join('{:longest}'.format(v) for v in value)
         except:
-            print bcolors.OKBLUE + key.ljust(30) + bcolors.ENDC + "".join(v.ljust(45) for v in value)
+            print bcolors.OKBLUE + key.ljust(30) + bcolors.ENDC + "".join(v.ljust(longest) for v in value)
 
 
 def main():
