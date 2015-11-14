@@ -123,12 +123,12 @@ def get_vhosts():
                 vhost = []
             elif in_vhost and line.lower().startswith('</virtualhost>'):
                 in_vhost = False
-                all_vhosts.append("ConfigFile " + v + "\n" + ''.join(vhost) + '</Virtualhost>')
+                all_vhosts.append("ConfigFile " + v + "\n" + ''.join(vhost) + '</Virtualhost>\n')
                 vhost = None
             if in_vhost:
+                line = re.sub(r'(\\\n)$',r'',line)
                 vhost.append(line)
-    print "".join(all_vhosts).replace("\\\n","").strip()
-    return "".join(all_vhosts).replace("\\\n","").strip()
+    return all_vhosts
 
 
 def test_string(vhost_list, text):
