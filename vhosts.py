@@ -83,7 +83,7 @@ def get_conf_files():
     n = 0
     apache_conf = [apache_files()[1]]
     new_list = [apache_conf + get_conf_list(apache_conf)]
-    while True:   #n = n + 1
+    while True:
         new_list.append(get_conf_list(new_list[n]))
         if len(new_list[-1]) > 0:
             new_list.append(get_conf_list(new_list[n]))
@@ -123,9 +123,10 @@ def get_vhosts():
                 vhost = []
             elif in_vhost and line.lower().startswith('</virtualhost>'):
                 in_vhost = False
-                all_vhosts.append("ConfigFile " + v + "\n" + ''.join(vhost) + '</Virtualhost>')
+                all_vhosts.append("ConfigFile " + v + "\n" + ''.join(vhost) + '</Virtualhost>\n')
                 vhost = None
             if in_vhost:
+                line = re.sub(r'(\\\n)$',r'',line)
                 vhost.append(line)
     return all_vhosts
 
