@@ -37,7 +37,5 @@ Options:
 ###Bugs/To Do
 
 * It kinda works with Plesk
-* It doesnt read next line in case of \ delimiter
 * It doesn't strip out quotes in names
-* Proper table alignment based on columns lenght
 * Check if Apache is running
