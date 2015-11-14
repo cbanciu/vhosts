@@ -127,6 +127,7 @@ def get_vhosts():
                 vhost = None
             if in_vhost:
                 vhost.append(line)
+    print "".join(all_vhosts).replace("\\\n","").strip()
     return "".join(all_vhosts).replace("\\\n","").strip()
 
 
