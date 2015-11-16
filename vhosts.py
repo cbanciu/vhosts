@@ -166,7 +166,7 @@ def get_longest_element():
     longest_element = []
     for v in vhost_dict.values():
         longest_element.append(max(len(i) for i in v))
-    return max(l for l in longest_element)
+    return max(l for l in longest_element)+2
 
 
 def print_header():
