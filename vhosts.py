@@ -24,6 +24,9 @@ class bcolors:
     CYAN = '\033[96m'
     UNDERLINE = '\033[4m'
 
+if os.geteuid() != 0:
+        exit("This script requires root privilidges.\nPlease try again us"\
+            "ing 'sudo'.")
 
 def apache_files():
     """Get Apache HTTPD_ROOT and SERVER_CONFIG_FILE"""
