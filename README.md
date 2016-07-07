@@ -30,6 +30,17 @@ Options:
                         Display domain virtualhost info
 ```
 
+###Example
+
+```sh
+$ curl -s https://raw.githubusercontent.com/cbanciu/vhosts/master/vhosts.py | python -
+
+SERVERNAME                    DOCUMENTROOT                            ACCESS_LOG                              ERROR_LOG                               CONFIG_FILE
+dummy-host.example.com:80     /www/docs/dummy-host.example.com        logs/dummy-host.example.com-access_log  logs/dummy-host.example.com-error_log   /etc/httpd/conf/httpd.conf
+host.example.com:80           /www/docs/host.example.com              logs/host.example.com-access_log        logs/host.example.com-error_log         /etc/httpd/conf.d/vhost.conf
+www.host.example.com:80       /www/docs/host.example.com              logs/host.example.com-access_log        logs/host.example.com-error_log         /etc/httpd/conf.d/vhost.conf
+```
+
 ### Requirements
 
 * python 2.4 or newer
